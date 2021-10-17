@@ -73,13 +73,13 @@ $$
 functional T 가 F에서 Gateaux differentiable 하다는 것은 
 
 $$
-\exists \ a(X) ( a : X \rarr \mathbb{R})\ \ such \ that\ \ G \in \mathbb{F}
+\exists \ a(X) ( a : X \rightarrow \mathbb{R})\ \ such \ that\ \ G \in \mathbb{F}
 $$
 
 에 대해서
 
 $$
-lim_{\epsilon \rarr 0} \frac{T(F + \epsilon(G-F)) - T(F)}{\epsilon} = lim_{\epsilon \rarr 0} \frac{T((1-\epsilon)F + \epsilon G) - T(F)}{\epsilon} = \int a(x)dG(x) = T_a(G)
+lim_{\epsilon \rightarrow 0} \frac{T(F + \epsilon(G-F)) - T(F)}{\epsilon} = lim_{\epsilon \rightarrow 0} \frac{T((1-\epsilon)F + \epsilon G) - T(F)}{\epsilon} = \int a(x)dG(x) = T_a(G)
 $$
 
 으로 정의된다. 
