@@ -5,8 +5,6 @@ subtitle : blog
 date : 2021-10-17
 #categories:
 tags : [how_to_design_blog]
-toc_sticky : true
-use_math : true
 comments: true
 ---
 
