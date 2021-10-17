@@ -93,6 +93,15 @@ disqus:
 
 paginate: 10
 
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
