@@ -1,0 +1,172 @@
+---
+layout : post
+title : CDA - chap1
+subtitle : categorical data analysis
+date : 2021-10-25
+#categories:
+tags : [datascience, datamining, machinelearning, categorical data]
+toc_sticky : true
+use_math : true
+comments: true
+---
+
+
+# Introduction : Distributions and Inference for Categorical Data
+
+<br>
+
+### 1.1 Categorical Response Data
+범주형 자료의 다양한 예시 e.g. classification, how good a product
+
+<br>
+
+#### 1.1.1 Response-Explanatory variable Distinction
+
+설명변수의 데이터 형태는 다양하다.
+
+<br>
+
+#### 1.1.2 Binary-Nominal-Ordinal Scale Distinction
+
+1. binary - two categories 
+2. nominal - more than two categories without ordering 
+3. ordinal - ordered categories - distances between categories are unknown - e.g. patient condition
+4. interval variable - numerical distances exist - e.g. annual income
++
+5. discrete interval variable
+6. continuous variable
+
+어떻게 변수를 측정하는지에 따라 같은 자료에 대해 여러가지 형태의 변수를 만들 수 있다.
+
+binary ~ interval variable 은 lower level 에서 higher level로 정렬되어 있는데, 낮은 수준에서 사용한 분석법은 높은 수준의 변수에서도 사용가능 (역은 안됨) 
+
+<br>
+
+#### 1.1.3 Discrete-Continuous Variable Distinction
+
+discrete 와 continuous 의 차이는 셀수 있는지 여부. discrete 변수의 값이 너무 많으면 그건 연속형 변수로 보겠다!
+
+<br>
+
+#### 1.1.4 Quantitative - Qualitative Variable Distinction
+
+Nomial - Qualitative
+
+oridnal - fuzzy (순서형 자료의 경우 크고 작고는 있으므로 이를 활용해서 양적변수처럼 인식할 수도 있을 것이다 => scale을 잘 활용해서 numerical score를 할당하면 가능할 것)
+
+interval - Quantitative
+
+<br>
+
+### 1.2 Distributions for Categorical Data
+
+1. binomial ---- binary obs 가 독립이 아니라면 hypergeometric
+2. Multinomial ----  $E(n_j) = n \pi_j$ , $var(n_j)=n \pi_j ( 1- \pi_j)$ , $cov(n_j, n_k) = -n \pi_j \pi_k$
+3. Poisson ---- binomial 에서 n이 매우 크고 $\pi$ 가 매우 작을 때 포아송 근사 가능. 포아송분포는 평균값이 증가면서 정규근사 됨.
+
+<br>
+
+#### 1.2.4 Overdispersion
+
+정의 : 특정 분포를 가정하고 관측을 했을 때, 매우 특이한 이상치들이 나올 수 있다. 
+
+상황 : 
+1. 특정 상황의 변화에 따라 분포의 모수가 바뀔 수 있음(베이지안 관점). 
+2. 분포가 서로 다른 모수를 가진 binomial 분포의 mixture 분포 
+
+
+해결 : Quasi-Likelyhood and GLM (chapter 4.7)
+
+일반적으로 GLM에서 score function을 구하면 다음과 같다
+
+exponential dispersion family 
+
+$$
+f(y ; \theta_i, \phi) = exp(\frac {y_i\theta_i - b(\theta_i)} {a(\phi)} + c(y_i,\phi))
+$$
+
+에 대해 
+
+$$
+Score \ f = \sum_{i=1} ^N \frac{(y_i - \mu_i)x_{ij}}{var(y_i)} \frac{\partial \mu_i}{\partial \eta_i} = 0 \ \ -- (*)
+$$
+
+
+반면 Quasi-likelihood estimate 은 특정 분포가 아닌 평균과 분산의 관계만을 가정한다. (예를 들자면 포아송분포의 평균은 분산과 동일한데, 이때 그 관계를 $\nu(\mu_i) = \mu_i$ 이런식으로 정의하는게 끝)
+
+그럼 평균과 분산만의 관계로 어떻게 추정이 가능할까?  ===> 위의 (*) 함수를 사용한다! (exponential family 가 아니어도 이 식을 사용한다)
+
+$$
+\sum_{i=1} ^N \frac{(y_i - \mu_i)x_{ij}}{\nu(\mu_i)} \frac{\partial \mu_i}{\partial \eta_i} = 0
+$$
+
+를 만족하는 모수값을 추정값으로 삼는다. 이 때 평균과 분산의 관계에 의해서 식이 아래와 같이 변형되고 포아송분포에서는 quasi-likelihoood 를 사용한 추정량이 MLE와 동일한 것을 알 수 있다.
+
+$$
+\sum_{i=1} ^N \frac{(y_i - \mu_i)x_{ij}}{\mu_i} \frac{\partial \mu_i}{\partial \eta_i} = 0
+$$
+
+
+추가적으로, QL estimateor 는 GLM에서 찾은 MLE의 점근적 분산과 동일하다. $var(score \ f) = I_n(\beta) = var(X^TDV^{-1}(y-\mu)) = X^TWX$
+
+
+<br>
+
+이제 실제로 overdispersion을 quasi-likelihood를 사용해서 다뤄보자.
+
+$$
+\nu(\mu_i) = \phi \mu_i
+$$
+
+
+라고 가정하면, $\phi > 1 $ 일 때 overdispersion을 다룰 수 있다.
+
+즉 분산이 $\nu(\mu_i) = \phi \nu^* (\mu_i) $ 일 때
+
+$$
+\chi^2 = \sum_{i=1} ^N \frac{(y_i - \hat \mu_i)}{\nu^*(\hat \mu_i)}
+$$
+
+에 대해 $E(\chi^2 / \phi) \approx N-p$ 이므로 $\hat \phi = \chi^2 / (N-p)$ 로 추정 가능하다. 이를 활용해서 일반적인 GLM 에서 찾은 분산값에 $\hat \phi$ 를 곱해주면 overdispersion을 다룰 수 있다.
+
+<br>
+
+#### 1.2.5 Connection between Poisson and Multinomial Distributions
+
+
+iid 포아송분포의 합은 당연히 포아송분포를 따르게 되는데, 만약 그 합의 개수가 N으로 정해져있다면?
+
+$N= \sum Y_i $ 가 given이면 $Y_i$는 절대 N을 넘을 수 없고 이때는 더이상 Y 가 포아송분포가 아니게 된다. 
+
+pf)
+
+<img src='{{"/assets/img/cda1-1.jpeg"| relative_url}}'  width="70%" height="70%" title="1" alt='relative'>
+
+<br>
+
+#### 1.2.6 The Chi-Squared Distribution
+
+
+<br>
+
+
+### 1.3 Statistical Inference for Categorical Data
+
+
+
+<br>
+
+
+### 1.4 Statistical Inference for Binomial Parameters
+
+
+<br>
+
+
+### 1.5 Statistical Inference for Multinomial Parameters
+
+
+<br>
+
+
+### 1.6 Bayesian Inference for Binomial and Multinomial Parameters
