@@ -67,8 +67,9 @@ Figure 1 은 이를 나타낸 것이다.
 
 <img src='{{"/assets/img/paper_figure1.png"| relative_url}}'  width="70%" height="70%" title="1" alt='relative'>
 
+<br>
 
-y 축은 $log loss = || \hat \Sigma_n - \Sigma ||_2$, x 축은 log of total number of steps = $ log \eta_i $
+y축은 $log loss = || \hat \Sigma_n - \Sigma ||_2$, x 축은 log of total number of steps = $ log \eta_i $
 
 
 limiting covariance 가 위와 같이 나오는 것은 $\dot l(\theta) = \dot l(\hat \theta) + \ddot  l(\hat \theta)(\theta - \hat \theta) $ 식을 통해 limiting covariance를 찾는 과정에 기인.  
