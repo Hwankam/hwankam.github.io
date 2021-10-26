@@ -62,17 +62,21 @@ $$
 
 이므로, online estimator의 convergence를 확인하기 위해서는 분산행렬의 operator norm estimate에 대한 Loss 값의 변화를 계산해본다.
 
-Figure 1 은 이를 나타낸 것이다.
+Figure 1 은 이를 나타낸 것이다.  
+y축은 $log loss = || \hat \Sigma_n - \Sigma ||_2$  
+x축은 log of total number of steps = $log \eta_i$ 를 의미한다
 
 
 <img src='{{"/assets/img/paper_figure1.png"| relative_url}}'  width="70%" height="70%" title="1" alt='relative'>
 
 <br>
 
-y축은 $log loss = || \hat \Sigma_n - \Sigma ||_2$, x 축은 log of total number of steps = $ log \eta_i $
+<br>
 
 
-limiting covariance 가 위와 같이 나오는 것은 $\dot l(\theta) = \dot l(\hat \theta) + \ddot  l(\hat \theta)(\theta - \hat \theta) $ 식을 통해 limiting covariance를 찾는 과정에 기인.  
+
+
+(limiting covariance 가 위와 같이 나오는 것은 $\dot l(\theta) = \dot l(\hat \theta) + \ddot  l(\hat \theta)(\theta - \hat \theta) $ 식을 통해 limiting covariance를 찾는 과정에 기인.)
 
 
 
