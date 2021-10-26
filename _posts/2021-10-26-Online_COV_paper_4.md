@@ -1,3 +1,16 @@
+---
+layout : post
+title : Online Covariance Estimation - paper - 4
+subtitle : paper reading
+date : 2021-10-26
+#categories:
+tags : [estimation, statistical computing, machine_learning]
+toc_sticky : true
+use_math : true
+comments: true
+---
+
+
 # 4. Simulation Studies
 
 <br>
