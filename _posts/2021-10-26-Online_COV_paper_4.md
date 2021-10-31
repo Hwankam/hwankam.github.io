@@ -60,7 +60,7 @@ S = E([\nabla f(x^*, \xi)][\nabla f(x^*, \xi)]^T)=E(\epsilon^2)E(aa^T) = \mathbf
 
 $$
 
-이므로, online estimator의 convergence를 확인하기 위해서는 분산행렬의 operator norm estimate에 대한 Loss 값의 변화를 계산해본다.
+이므로, online estimator의 convergence를 확인하기 위해서는 추정한 분산행렬을 사용한 operator norm Loss를 계산해본다.
 
 Figure 1 은 이를 나타낸 것이다.  
 y축은 $log loss = || \hat \Sigma_n - \Sigma ||_2$  
