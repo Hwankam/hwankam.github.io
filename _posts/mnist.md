@@ -1,0 +1,1032 @@
+```python
+import pandas as pd
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+
+```python
+os.getcwd()
+```
+
+
+
+
+    '/Users/hwankam/ASC'
+
+
+
+
+```python
+train = pd.read_csv("./mnist_train.csv")
+```
+
+
+```python
+pd.read_csv("./mnist_test.csv")
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>1x1</th>
+      <th>1x2</th>
+      <th>1x3</th>
+      <th>1x4</th>
+      <th>1x5</th>
+      <th>1x6</th>
+      <th>1x7</th>
+      <th>1x8</th>
+      <th>1x9</th>
+      <th>...</th>
+      <th>28x19</th>
+      <th>28x20</th>
+      <th>28x21</th>
+      <th>28x22</th>
+      <th>28x23</th>
+      <th>28x24</th>
+      <th>28x25</th>
+      <th>28x26</th>
+      <th>28x27</th>
+      <th>28x28</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9995</th>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9996</th>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9997</th>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9998</th>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9999</th>
+      <td>6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10000 rows × 785 columns</p>
+</div>
+
+
+
+
+```python
+train.shape
+```
+
+
+
+
+    (60000, 785)
+
+
+
+
+```python
+X_train = train.iloc[0:10000,1:]
+```
+
+
+```python
+X_train
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1x1</th>
+      <th>1x2</th>
+      <th>1x3</th>
+      <th>1x4</th>
+      <th>1x5</th>
+      <th>1x6</th>
+      <th>1x7</th>
+      <th>1x8</th>
+      <th>1x9</th>
+      <th>1x10</th>
+      <th>...</th>
+      <th>28x19</th>
+      <th>28x20</th>
+      <th>28x21</th>
+      <th>28x22</th>
+      <th>28x23</th>
+      <th>28x24</th>
+      <th>28x25</th>
+      <th>28x26</th>
+      <th>28x27</th>
+      <th>28x28</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9995</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9996</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9997</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9998</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9999</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10000 rows × 784 columns</p>
+</div>
+
+
+
+#이미지로 보이기 위해서는 배열로 바꾸어 줘야한다. 
+
+
+```python
+A = X_train.iloc[3]
+A_array = np.array(A) 
+A_data = A_array.reshape(28,28)
+plt.imshow(A_data)
+plt.show()
+```
+
+
+    
+![png](output_8_0.png)
+    
+
+
+
+```python
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+```
+
+
+```python
+X_scaled = scaler.fit_transform(X_train)
+X_scaled_T = scaler.fit_transform(np.transpose(X_train))
+```
+
+
+```python
+cov_mat = np.matmul(X_scaled.T, X_scaled)
+```
+
+
+```python
+from scipy.linalg import eigh
+values, vectors = eigh(cov_mat, eigvals = (774,783)) # 여기 eigvals에서 Eigenvector를 몇개 쓸지 정한다.
+```
+
+
+```python
+values
+```
+
+
+
+
+    array([101445.70057248, 112486.7190506 , 128273.94825691, 139044.86021375,
+           158766.14803775, 182041.79049293, 207745.99366805, 272280.73015253,
+           293848.17795963, 414834.99478416])
+
+
+
+
+```python
+vectors
+```
+
+
+
+
+    array([[0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.],
+           ...,
+           [0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.]])
+
+
+
+## SVD 이후에 고유백터의 일부를 뽑은 V'' 를 사용해 (V'')(V'')^T 를 기존 Design 행렬에 곱해주면 Low rank approx
+
+
+```python
+X_train_trans = np.matmul(np.matmul(vectors,vectors.T),X_scaled.T) 
+```
+
+
+```python
+X_train_trans.shape
+```
+
+
+
+
+    (784, 10000)
+
+
+
+
+```python
+X_train_trans.T[1].shape
+```
+
+
+
+
+    (784,)
+
+
+
+
+```python
+plt.imshow(X_train_trans.T[3].reshape(28,28))
+plt.show()
+```
+
+
+    
+![png](output_19_0.png)
+    
+
+
+
+```python
+from scipy.linalg import eigh
+values2, vectors2 = eigh(cov_mat, eigvals = (683,783)) # 여기 eigvals에서 Eigenvector를 몇개 쓸지 정한다.
+```
+
+
+```python
+X_train_trans2 = np.matmul(np.matmul(vectors2,vectors2.T),X_scaled.T)
+plt.imshow(X_train_trans2.T[3].reshape(28,28))
+plt.show()
+```
+
+
+    
+![png](output_21_0.png)
+    
+
+
+
+```python
+from scipy.linalg import eigh
+values3, vectors3 = eigh(cov_mat, eigvals = (583,783)) # 여기 eigvals에서 Eigenvector를 몇개 쓸지 정한다.
+```
+
+
+```python
+X_train_trans3 = np.matmul(np.matmul(vectors3,vectors3.T),X_scaled.T)
+plt.imshow(X_train_trans2.T[3].reshape(28,28))
+plt.show()
+```
+
+
+    
+![png](output_23_0.png)
+    
+
+
+## 아래는 pc score의 분산값의 비율을 그림으로 표현한 것이다
+
+
+```python
+from sklearn.decomposition import PCA
+```
+
+
+```python
+pca=PCA(n_components=784)
+```
+
+
+```python
+#pca=decomposition.PCA()
+#pca.n_components = 784
+pca_data = pca.fit_transform(X_scaled)
+```
+
+
+```python
+per = pca.explained_variance_ / np.sum(pca.explained_variance_ )
+```
+
+
+```python
+cum_var = np.cumsum(per)
+```
+
+
+```python
+plt.plot(cum_var)
+plt.grid()
+plt.show()
+```
+
+
+    
+![png](output_30_0.png)
+    
+
+
+
+```python
+
+```
+
+## 아래는 텐서플로우내에 존재하는 원본데이터 형식에서 그림을 추출해내는 코드이다.
+
+
+```python
+from keras.datasets import mnist
+```
+
+    Using TensorFlow backend.
+
+
+
+```python
+import tensorflow as tf
+```
+
+
+```python
+mnist = tf.keras.datasets.mnist.load_data()
+```
+
+
+```python
+#mnist 데이터는 Minst[0] 이 train data 이고 mnist[1]이 test data이다. 
+train_x = mnist[0][0]
+```
+
+
+```python
+train_x.shape
+```
+
+
+
+
+    (60000, 28, 28)
+
+
+
+
+```python
+train_x[1]
+```
+
+
+
+
+    array([[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,  51, 159, 253, 159,  50,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,  48, 238, 252, 252, 252, 237,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+             54, 227, 253, 252, 239, 233, 252,  57,   6,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  10,  60,
+            224, 252, 253, 252, 202,  84, 252, 253, 122,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 163, 252,
+            252, 252, 253, 252, 252,  96, 189, 253, 167,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  51, 238, 253,
+            253, 190, 114, 253, 228,  47,  79, 255, 168,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,  48, 238, 252, 252,
+            179,  12,  75, 121,  21,   0,   0, 253, 243,  50,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,  38, 165, 253, 233, 208,
+             84,   0,   0,   0,   0,   0,   0, 253, 252, 165,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   7, 178, 252, 240,  71,  19,
+             28,   0,   0,   0,   0,   0,   0, 253, 252, 195,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,  57, 252, 252,  63,   0,   0,
+              0,   0,   0,   0,   0,   0,   0, 253, 252, 195,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0, 198, 253, 190,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0, 255, 253, 196,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  76, 246, 252, 112,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0, 253, 252, 148,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  85, 252, 230,  25,   0,   0,   0,
+              0,   0,   0,   0,   0,   7, 135, 253, 186,  12,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  85, 252, 223,   0,   0,   0,   0,
+              0,   0,   0,   0,   7, 131, 252, 225,  71,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  85, 252, 145,   0,   0,   0,   0,
+              0,   0,   0,  48, 165, 252, 173,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  86, 253, 225,   0,   0,   0,   0,
+              0,   0, 114, 238, 253, 162,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  85, 252, 249, 146,  48,  29,  85,
+            178, 225, 253, 223, 167,  56,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  85, 252, 252, 252, 229, 215, 252,
+            252, 252, 196, 130,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,  28, 199, 252, 252, 253, 252, 252,
+            233, 145,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,  25, 128, 252, 253, 252, 141,
+             37,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0],
+           [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+              0,   0]], dtype=uint8)
+
+
+
+
+```python
+plt.imshow(train_x[1])
+plt.show()
+```
+
+
+    
+![png](output_39_0.png)
+    
+
+
+
+```python
+
+```
